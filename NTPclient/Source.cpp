@@ -13,17 +13,17 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	MultipleKinectsPlatformServer::NTPClient MRD7090_NTP(argv[1]);
-	MultipleKinectsPlatformServer::NTPClient MRR8001_NTP(argv[2]);
+	MultipleKinectsPlatformServer::NTPClient First_NTP_Server(argv[1]);
+	MultipleKinectsPlatformServer::NTPClient Second_NTP_Server(argv[2]);
 	while(1) {
-		double d7090_sec = MRD7090_NTP.RequestDatetime_UNIX_Offset();
-		double d8001_sec = MRR8001_NTP.RequestDatetime_UNIX_Offset();
+		double dFirst_sec = First_NTP_Server.RequestDatetime_UNIX_Offset();
+		double dSecond_sec = Second_NTP_Server.RequestDatetime_UNIX_Offset();
 
-		if(abs(d7090_sec - d8001_sec) < 0.05)
-			cout << "Processes synced : " << abs(d7090_sec - d8001_sec) << " seconds difference\n"
+		if(abs(dFirst_sec - dSecond_sec) < 0.05)
+			cout << "Processes synced : " << abs(dFirst_sec - dSecond_sec) << " seconds difference\n"
 				 << endl;
 		else
-			cout << "EQS DAQ are out of sync : " << abs(d7090_sec - d8001_sec) << " seconds difference\n"
+			cout << "EQS DAQ are out of sync : " << abs(dFirst_sec - dSecond_sec) << " seconds difference\n"
 				 << endl;
 
 		std::this_thread::sleep_for(std::chrono::seconds(1));

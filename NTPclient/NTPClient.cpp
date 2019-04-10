@@ -38,10 +38,10 @@ namespace MultipleKinectsPlatformServer
 
 		auto now_us = std::chrono::time_point_cast<std::chrono::microseconds>(std::chrono::system_clock::now());
 		auto duration_us = now_us.time_since_epoch().count();
-		unsigned uTime_sec = ((duration_us / 1000000) + 2208988800U);
-		float fTime_us = duration_us % 1000000;
+		auto uTime_sec = ((duration_us / 1000000) + 2208988800U);
+		float fTime_us = static_cast<float>(duration_us % 1000000);
 		fTime_us *= 4294.967296f;
-		unsigned uTime_us = (unsigned)fTime_us;
+		unsigned uTime_us = static_cast<unsigned>(fTime_us);
 
 		uTime_sec = htonl(uTime_sec);
 		memcpy(&sendBuf[40], &uTime_sec, sizeof(unsigned));
